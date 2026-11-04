@@ -1,16 +1,15 @@
 import cv2
 import mediapipe as mp
-
-# Import resmi submodul solutions MediaPipe
-from mediapipe.solutions import hands as mp_hands
-from mediapipe.solutions import drawing_utils as mp_draw
-
 import random
 import numpy as np
 from streamlit_webrtc import VideoTransformerBase
 import av
 
 from src.utils import load_assets, overlay_transparent
+
+# Menggunakan API solutions standar MediaPipe 0.10.x
+mp_hands = mp.solutions.hands
+mp_draw = mp.solutions.drawing_utils
 
 class FruitNinjaProcessor(VideoTransformerBase):
     def __init__(self):
