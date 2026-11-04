@@ -1,12 +1,9 @@
 import cv2
 import mediapipe as mp
-# Import eksplisit submodul solutions
-try:
-    import mediapipe.python.solutions.hands as mp_hands
-    import mediapipe.python.solutions.drawing_utils as mp_draw
-except ModuleNotFoundError:
-    mp_hands = mp.solutions.hands
-    mp_draw = mp.solutions.drawing_utils
+
+# Import resmi submodul solutions MediaPipe
+from mediapipe.solutions import hands as mp_hands
+from mediapipe.solutions import drawing_utils as mp_draw
 
 import random
 import numpy as np
@@ -19,7 +16,7 @@ class FruitNinjaProcessor(VideoTransformerBase):
     def __init__(self):
         self.assets = load_assets()
         
-        # Gunakan variabel mp_hands dan mp_draw hasil import eksplisit
+        # Inisialisasi MediaPipe Hands
         self.mp_hands = mp_hands
         self.hands = self.mp_hands.Hands(
             max_num_hands=1, 
