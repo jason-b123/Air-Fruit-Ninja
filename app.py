@@ -56,7 +56,8 @@ ctx = webrtc_streamer(
 
 # --- LOGIKA RESTART GAME ---
 if st.button("Restart Game"):
-    processor = ctx.video_transformer or ctx.video_processor
+    # Mengambil processor secara aman menggunakan getattr
+    processor = getattr(ctx, "video_processor", None) or getattr(ctx, "video_transformer", None)
     if processor:
         processor.score = 0
         processor.lives = 3
