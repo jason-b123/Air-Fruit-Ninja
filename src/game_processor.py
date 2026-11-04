@@ -1,5 +1,13 @@
 import cv2
 import mediapipe as mp
+# Import eksplisit submodul solutions
+try:
+    import mediapipe.python.solutions.hands as mp_hands
+    import mediapipe.python.solutions.drawing_utils as mp_draw
+except ModuleNotFoundError:
+    mp_hands = mp.solutions.hands
+    mp_draw = mp.solutions.drawing_utils
+
 import random
 import numpy as np
 from streamlit_webrtc import VideoTransformerBase
@@ -9,18 +17,17 @@ from src.utils import load_assets, overlay_transparent
 
 class FruitNinjaProcessor(VideoTransformerBase):
     def __init__(self):
-        # 1. Memuat aset secara aman di __init__
         self.assets = load_assets()
         
-        # 2. OPTIMASI MEDIAPIPE: Pakai model_complexity=0 agar super ringan
-        self.mp_hands = mp.solutions.hands
+        # Gunakan variabel mp_hands dan mp_draw hasil import eksplisit
+        self.mp_hands = mp_hands
         self.hands = self.mp_hands.Hands(
             max_num_hands=1, 
-            model_complexity=0, # Model ringan untuk web
+            model_complexity=0,
             min_detection_confidence=0.5,
             min_tracking_confidence=0.5
         )
-        self.mp_draw = mp.solutions.drawing_utils
+        self.mp_draw = mp_draw
         
         # State Game
         self.score = 0
